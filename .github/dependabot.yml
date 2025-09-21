@@ -5,10 +5,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "America/New_York"
+      interval: "monthly"
 
     # Limit open PRs to avoid spam
     open-pull-requests-limit: 10
@@ -77,18 +74,11 @@ updates:
       - dependency-name: "github.com/deprecated-package"
         update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
 
-    # Allow automatic merging for patch updates
-    allow:
-      - dependency-type: "direct"
-        update-type: "version-update:semver-patch"
-      - dependency-type: "indirect"
-        update-type: "version-update:semver-patch"
-
   # If you have multiple Go modules in subdirectories
   - package-ecosystem: "gomod"
     directory: "/cmd/api"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps(api)"
@@ -96,7 +86,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/cmd/worker"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps(worker)"
