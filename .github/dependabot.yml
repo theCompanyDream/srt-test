@@ -1,0 +1,102 @@
+# Dependabot configuration for Go project
+version: 2
+updates:
+  # Monitor Go modules (go.mod and go.sum)
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/New_York"
+
+    # Limit open PRs to avoid spam
+    open-pull-requests-limit: 10
+
+    # Commit message configuration
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps"
+      include: "scope"
+
+    # Group updates by type
+    groups:
+      # Group all patch and minor updates together
+      go-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Keep major updates separate for careful review
+      go-major:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+
+      # Group testing dependencies together
+      testing-deps:
+        patterns:
+          - "github.com/stretchr/testify"
+          - "github.com/golang/mock"
+          - "github.com/onsi/ginkgo*"
+          - "github.com/onsi/gomega"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Group database drivers
+      database-drivers:
+        patterns:
+          - "gorm.io/driver/*"
+          - "github.com/lib/pq"
+          - "github.com/go-sql-driver/mysql"
+          - "go.mongodb.org/mongo-driver"
+
+      # Group web framework dependencies
+      web-frameworks:
+        patterns:
+          - "github.com/gin-gonic/gin"
+          - "github.com/gorilla/*"
+          - "github.com/labstack/echo*"
+          - "github.com/gofiber/fiber*"
+
+    # Ignore certain dependencies or update types
+    ignore:
+      # Ignore major version updates for breaking-change-prone packages
+      - dependency-name: "gorm.io/gorm"
+        update-types: ["version-update:semver-major"]
+
+      # Ignore specific problematic versions
+      - dependency-name: "github.com/some-package"
+        versions: ["1.2.3", "1.2.4"]
+
+      # Ignore all updates for deprecated packages you're planning to replace
+      - dependency-name: "github.com/deprecated-package"
+        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+
+    # Allow automatic merging for patch updates
+    allow:
+      - dependency-type: "direct"
+        update-type: "version-update:semver-patch"
+      - dependency-type: "indirect"
+        update-type: "version-update:semver-patch"
+
+  # If you have multiple Go modules in subdirectories
+  - package-ecosystem: "gomod"
+    directory: "/cmd/api"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(api)"
+
+  - package-ecosystem: "gomod"
+    directory: "/cmd/worker"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(worker)"
