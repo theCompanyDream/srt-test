@@ -1,3 +1,3 @@
-module github.com/theCompanyDream/srt-test.git
+module github.com/theCompanyDream/srt-test
 
 go 1.24.4
