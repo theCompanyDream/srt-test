@@ -45,7 +45,7 @@ func main() {
 	}
 
 	// Extract and validate language
-	allText := extractAllText(captions)
+	allText := parse.ExtractAllText(captions)
 	if !validateLanguage(allText, config.Endpoint) {
 		validationErrors = append(validationErrors, models.ValidationError{
 			Type:        "invalid_language",
@@ -116,15 +116,7 @@ func validateLanguage(text, endpoint string) bool {
 	return langResp.Lang == "en-US"
 }
 
-func extractAllText(captions []models.CaptionEntry) string {
-	var textParts []string
-	for _, caption := range captions {
-		if strings.TrimSpace(caption.Text) != "" {
-			textParts = append(textParts, caption.Text)
-		}
-	}
-	return strings.Join(textParts, " ")
-}
+
 
 func printValidationError(errorType, description string) {
 	validationError := models.ValidationError{
