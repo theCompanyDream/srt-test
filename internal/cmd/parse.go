@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/theCompanyDream/srt-test.git/internal/models"
+	"github.com/theCompanyDream/srt-test/internal/models"
 )
 
 func ParseFlags() (*models.Config, error) {

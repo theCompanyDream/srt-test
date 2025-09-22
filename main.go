@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/theCompanyDream/srt-test.git/internal/cmd"
-	"github.com/theCompanyDream/srt-test.git/internal/models"
-	"github.com/theCompanyDream/srt-test.git/internal/parse"
+	"github.com/theCompanyDream/srt-test/internal/cmd"
+	"github.com/theCompanyDream/srt-test/internal/models"
+	"github.com/theCompanyDream/srt-test/internal/parse"
 )
 
 func main() {

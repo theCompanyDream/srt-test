@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/theCompanyDream/srt-test.git/internal/models"
+	"github.com/theCompanyDream/srt-test/internal/models"
 )
 
 func ParseWebVTT(reader io.Reader) ([]models.CaptionEntry, error) {

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/theCompanyDream/srt-test.git/internal/models"
+	"github.com/theCompanyDream/srt-test/internal/models"
 )
 
 func ParseCaptionFile(filePath string) ([]models.CaptionEntry, error) {
