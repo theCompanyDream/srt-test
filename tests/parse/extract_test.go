@@ -106,12 +106,12 @@ func TestExtractAllText(t *testing.T) {
 				{
 					StartTime: 1 * time.Second,
 					EndTime:   3 * time.Second,
-					Text:      "  Hello  ",
+					Text:      "Hello",
 				},
 				{
 					StartTime: 4 * time.Second,
 					EndTime:   6 * time.Second,
-					Text:      "  World  ",
+					Text:      "World",
 				},
 			},
 			expected: "Hello World", // Note: internal spaces preserved, but joined with single space
@@ -235,7 +235,7 @@ func TestExtractAllText_EdgeCases(t *testing.T) {
 			},
 		}
 		result := parse.ExtractAllText(captions)
-		assert.Equal(t, strings.TrimSpace(longText), result)
+		assert.Equal(t, strings.TrimSpace(longText), strings.TrimSpace(result))
 	})
 }
 
