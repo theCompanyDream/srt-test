@@ -11,8 +11,8 @@ import (
 func ParseFlags() (*models.Config, error) {
 	var (
 		filePath = flag.String("file", "", "Path to caption file (required)")
-		tStart   = flag.String("t_start", "0s", "Start time (e.g., 30s, 1m30s)")
-		tEnd     = flag.String("t_end", "", "End time (required)")
+		tStart   = flag.String("start", "0s", "Start time (e.g., 30s, 1m30s)")
+		tEnd     = flag.String("end", "", "End time (required)")
 		coverage = flag.Float64("coverage", 0.8, "Required coverage percentage (0.0-1.0)")
 		endpoint = flag.String("endpoint", "", "Language detection endpoint URL (required)")
 	)
