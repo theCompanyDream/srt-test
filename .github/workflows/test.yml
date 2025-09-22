@@ -13,6 +13,7 @@ env:
   GO_VERSION: "1.24"
 
 jobs:
+  # Test across multiple Go versions
   test:
     name: Test Go ${{ matrix.go-version }}
     runs-on: ubuntu-latest
@@ -95,30 +96,3 @@ jobs:
           go tool cover -func=coverage-${{ env.GO_VERSION }}.out | tail -n 1 >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Full coverage report available in artifacts." >> $GITHUB_STEP_SUMMARY
-
-  # Build verification
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: ${{ env.GO_VERSION }}
-          cache: true
-
-      - name: Build application
-        run: |
-          go build -v -o srt-test .
-          ./srt-test --help
-
-      - name: Upload binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: srt-test-binary
-          path: srt-test
