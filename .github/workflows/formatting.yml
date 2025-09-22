@@ -1,0 +1,69 @@
+name: Go Format Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format-check:
+    name: Check Go Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+          cache: true
+
+      - name: Install goimports
+        run: go install golang.org/x/tools/cmd/goimports@latest
+
+      - name: Check gofmt formatting
+        run: |
+          unformatted=$(gofmt -s -l .)
+          if [ -n "$unformatted" ]; then
+            echo "❌ The following Go files are not formatted with gofmt:"
+            echo "$unformatted"
+            echo ""
+            echo "To fix, run: gofmt -s -w ."
+            exit 1
+          fi
+          echo "✅ All Go files are properly formatted with gofmt"
+
+      - name: Check goimports formatting
+        run: |
+          unformatted=$(goimports -l .)
+          if [ -n "$unformatted" ]; then
+            echo "❌ The following Go files have import issues:"
+            echo "$unformatted"
+            echo ""
+            echo "To fix, run: goimports -w ."
+            exit 1
+          fi
+          echo "✅ All Go files have properly organized imports"
+
+      - name: Verify no changes needed
+        run: |
+          # Run both formatters and check if any files would change
+          gofmt -s -w .
+          goimports -w .
+
+          if [ -n "$(git diff --name-only)" ]; then
+            echo "❌ Files were modified by formatters:"
+            git diff --name-only
+            echo ""
+            echo "Please run the following commands locally:"
+            echo "  gofmt -s -w ."
+            echo "  goimports -w ."
+            echo "Then commit the changes."
+            exit 1
+          fi
+          echo "✅ No formatting changes needed"

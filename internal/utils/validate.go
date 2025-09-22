@@ -26,8 +26,8 @@ func ValidateCoverage(captions []models.CaptionEntry, tStart, tEnd time.Duration
 	var coveredDuration time.Duration
 	for _, caption := range captions {
 		// Calculate overlap with the specified range
-		overlapStart := maxDuration(caption.StartTime, tStart)
-		overlapEnd := minDuration(caption.EndTime, tEnd)
+		overlapStart := MaxDuration(caption.StartTime, tStart)
+		overlapEnd := MinDuration(caption.EndTime, tEnd)
 
 		if overlapStart < overlapEnd {
 			coveredDuration += overlapEnd - overlapStart
