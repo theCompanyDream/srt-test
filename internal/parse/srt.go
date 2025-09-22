@@ -44,11 +44,11 @@ func ParseSRT(reader io.Reader) ([]models.CaptionEntry, error) {
 		// Check if line contains timing
 		if matches := timeRegex.FindStringSubmatch(line); len(matches) == 3 {
 			var err error
-			currentEntry.StartTime, err = parseSRTTime(matches[1])
+			currentEntry.StartTime, err = ParseSRTTime(matches[1])
 			if err != nil {
 				return nil, fmt.Errorf("error parsing start time: %v", err)
 			}
-			currentEntry.EndTime, err = parseSRTTime(matches[2])
+			currentEntry.EndTime, err = ParseSRTTime(matches[2])
 			if err != nil {
 				return nil, fmt.Errorf("error parsing end time: %v", err)
 			}
@@ -67,7 +67,7 @@ func ParseSRT(reader io.Reader) ([]models.CaptionEntry, error) {
 	return captions, scanner.Err()
 }
 
-func parseSRTTime(timeStr string) (time.Duration, error) {
+func ParseSRTTime(timeStr string) (time.Duration, error) {
 	// Format: HH:MM:SS,mmm
 	parts := strings.Split(timeStr, ":")
 	if len(parts) != 3 {
